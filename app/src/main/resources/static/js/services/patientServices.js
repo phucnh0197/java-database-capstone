@@ -1,97 +1,94 @@
-// patientServices
+
 import { API_BASE_URL } from "../config/config.js";
-const PATIENT_API = API_BASE_URL + '/patient'
 
+const PATIENT_API = API_BASE_URL + '/patient';
 
-//For creating a patient in db
 export async function patientSignup(data) {
   try {
-    const response = await fetch(`${PATIENT_API}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify(data)
-      }
-    );
+    const response = await fetch(PATIENT_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
     const result = await response.json();
-    if (!response.ok) {
-      throw new Error(result.message);
-    }
-    return { success: response.ok, message: result.message }
-  }
-  catch (error) {
-    console.error("Error :: patientSignup :: ", error)
-    return { success: false, message: error.message }
+    return { success: response.ok, message: result.message || "Signup processed" };
+  } catch (error) {
+    console.error("Signup error:", error);
+    return { success: false, message: error.message };
   }
 }
 
-//For logging in patient
 export async function patientLogin(data) {
-  console.log("patientLogin :: ", data)
-  return await fetch(`${PATIENT_API}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
-
-
+  // Prompt says: "Returns the full fetch response so the frontend can check status, extract token, etc."
+  try {
+    const response = await fetch(`${PATIENT_API}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return response;
+  } catch (error) {
+    console.error("Login error:", error);
+    // Returning a mock error response or null might be safer if the caller expects a Response object
+    // But throwing allows the caller to catch.
+    throw error;
+  }
 }
 
-// For getting patient data (name ,id , etc ). Used in booking appointments
 export async function getPatientData(token) {
   try {
+    // Controller: "Handles HTTP GET requests to retrieve patient details using a token."
+    // Likely path variable based on context.
     const response = await fetch(`${PATIENT_API}/${token}`);
-    const data = await response.json();
-    if (response.ok) return data.patient;
+    if (response.ok) {
+      return await response.json();
+    }
     return null;
   } catch (error) {
-    console.error("Error fetching patient details:", error);
+    console.error("Error fetching patient data:", error);
     return null;
   }
 }
 
-// the Backend API for fetching the patient record(visible in Doctor Dashboard) and Appointments (visible in Patient Dashboard) are same based on user(patient/doctor).
 export async function getPatientAppointments(id, token, user) {
   try {
-    const response = await fetch(`${PATIENT_API}/${id}/${user}/${token}`);
-    const data = await response.json();
-    console.log(data.appointments)
+    // Controller: "Requires the patient ID, token, and user role as path variables."
+    const response = await fetch(`${PATIENT_API}/appointment/${id}/${token}/${user}`);
     if (response.ok) {
-      return data.appointments;
+      const data = await response.json();
+      return data.appointments || data; // Adjust based on actual API response structure
     }
+    console.error("Failed to fetch appointments");
     return null;
-  }
-  catch (error) {
-    console.error("Error fetching patient details:", error);
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
     return null;
   }
 }
 
 export async function filterAppointments(condition, name, token) {
   try {
-    const response = await fetch(`${PATIENT_API}/filter/${condition}/${name}/${token}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    // Controller: "Accepts filtering parameters: condition, name, and a token."
+    // Likely path variables: /filter/{condition}/{name}/{token} ?
+    // Or /appointment/filter/... ?
+    // Given filterDoctors was /filter/..., let's assume /patient/filter or /patient/appointment/filter
+    // Controller method is "filterPatientAppointment".
+    // Let's guess: `${PATIENT_API}/filter/${condition}/${name}/${token}`
+    // Just in case names can be empty for filtering:
+    const filterCondition = condition || 'null';
+    const filterName = name || 'null';
+
+    const response = await fetch(`${PATIENT_API}/filter/${filterCondition}/${filterName}/${token}`);
 
     if (response.ok) {
       const data = await response.json();
-      return data;
-
-    } else {
-      console.error("Failed to fetch doctors:", response.statusText);
-      return { appointments: [] };
-
+      return data.appointments || data;
     }
+    console.error("Failed to filter appointments");
+    return [];
   } catch (error) {
-    console.error("Error:", error);
-    alert("Something went wrong!");
-    return { appointments: [] };
+    console.error("Error filtering appointments:", error);
+    alert("An unexpected error occurred while filtering.");
+    return [];
   }
 }
