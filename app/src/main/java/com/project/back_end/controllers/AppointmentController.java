@@ -40,6 +40,10 @@ public class AppointmentController {
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
         }
 
+        if ("null".equals(patientName)) {
+            patientName = null;
+        }
+
         Map<String, Object> result = appointmentService.getAppointment(patientName, date, token);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

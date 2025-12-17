@@ -53,7 +53,8 @@ export async function getPatientData(token) {
 export async function getPatientAppointments(id, token, user) {
   try {
     // Controller: "Requires the patient ID, token, and user role as path variables."
-    const response = await fetch(`${PATIENT_API}/appointment/${id}/${token}/${user}`);
+    // Correction: Controller actually maps to /patient/{id}/{token}
+    const response = await fetch(`${PATIENT_API}/${id}/${token}`);
     if (response.ok) {
       const data = await response.json();
       return data.appointments || data; // Adjust based on actual API response structure

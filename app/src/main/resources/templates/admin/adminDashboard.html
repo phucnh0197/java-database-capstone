@@ -6,6 +6,23 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
     <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <style>
+        /* Quick fix style for the added button if css file is not editable now */
+        .add-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .add-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
 
     <script th:src="@{/js/render.js}" defer></script>
     <script th:src="@{/js/util.js}" defer></script>
@@ -22,6 +39,7 @@
                 <input type="text" id="searchBar" placeholder="Search by doctor name" />
 
                 <div class="filter-section">
+                    <button id="addDocBtn" class="add-btn">Add Doctor</button>
                     <select id="filterTime">
                         <option value="">Sort by Time</option>
                         <option value="AM">Morning (AM)</option>
