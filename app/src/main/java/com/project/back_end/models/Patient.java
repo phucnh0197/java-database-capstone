@@ -1,5 +1,6 @@
 package com.project.back_end.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Patient {
 
     @NotNull(message = "Email cannot be null")
     @Email(message = "Email should be valid")
+    @Column(unique = true)
     private String email;
 
     @NotNull(message = "Password cannot be null")

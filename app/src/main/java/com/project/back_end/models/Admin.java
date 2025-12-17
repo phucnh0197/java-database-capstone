@@ -1,5 +1,6 @@
 package com.project.back_end.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Admin {
     private Long id;
 
     @NotNull(message = "username cannot be null")
+    @Column(unique = true)
     private String username;
 
     @NotNull(message = "password cannot be null")
