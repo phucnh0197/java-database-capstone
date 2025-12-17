@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Clinic Management System</title>
-    <link rel="icon" href="./assets/images/favicon.ico" />
-    <link rel="stylesheet" href="./assets/css/index.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="./js/util.js" defer></script>
-    <script src="./js/render.js" defer></script>
-    <script src="./js/components/header.js" defer></script>
-    <script src="./js/components/footer.js" defer></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="wrapper">
-        <div id="header"></div>
-        <main class="main-content">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Clinic Management System</title>
+  <link rel="icon" href="./assets/images/favicon.ico" />
+  <link rel="stylesheet" href="./assets/css/index.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <script src="./js/util.js" defer></script>
+  <script src="./js/render.js" defer></script>
+  <script src="./js/components/header.js" defer></script>
+  <script src="./js/components/footer.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrapper">
+      <div id="header"></div>
+      <main class="main-content">
+        <div class="glass-card">
           <h2>Select Your Role</h2>
           <div class="role-selection">
-            <button id="adminBtn" onclick="selectRole('admin')">Admin</button>
-            <button id="doctorBtn" onclick="selectRole('doctor')">Doctor</button>
-            <button id="patientBtn" onclick="selectRole('patient')">Patient</button>
+            <button id="adminBtn" class="role-btn admin" onclick="selectRole('admin')">
+              <i class="icon-admin"></i> Admin
+            </button>
+            <button id="doctorBtn" class="role-btn doctor" onclick="selectRole('doctor')">
+              <i class="icon-doctor"></i> Doctor
+            </button>
+            <button id="patientBtn" class="role-btn patient" onclick="selectRole('patient')">
+              <i class="icon-patient"></i> Patient
+            </button>
           </div>
-        </main>
-        <div id="footer"></div>
-      </div>
+        </div>
+      </main>
+      <div id="footer"></div>
     </div>
+  </div>
 
-    <!-- Modal -->
-    <div id="modal" class="modal">
-      <span id="closeModal" class="close">&times;</span>
-      <div id="modal-body"></div>
-    </div>
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <span id="closeModal" class="close">&times;</span>
+    <div id="modal-body"></div>
+  </div>
 
-    <script type="module" src="./js/services/index.js" defer></script>
-  </body>
+  <script type="module" src="./js/services/index.js" defer></script>
+</body>
+
 </html>
