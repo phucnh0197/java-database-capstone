@@ -1,5 +1,6 @@
 
 import { openModal } from '../components/modals.js';
+window.openModal = openModal;
 import { API_BASE_URL } from '../config/config.js';
 
 const ADMIN_API = API_BASE_URL + '/admin';

@@ -1,15 +1,15 @@
 package com.project.back_end.DTO;
 
 public class Login {
-    private String identifier;
+    private String email;
     private String password;
 
-    public String getIdentifier() {
-        return identifier;
+    public String getEmail() {
+        return email;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

@@ -105,7 +105,7 @@ public class DoctorService {
     @Transactional
     public ResponseEntity<Map<String, String>> validateDoctor(Login login) {
         Map<String, String> response = new HashMap<>();
-        Doctor doctor = doctorRepository.findByEmail(login.getIdentifier());
+        Doctor doctor = doctorRepository.findByEmail(login.getEmail());
         if (doctor != null && doctor.getPassword().equals(login.getPassword())) {
             String token = tokenService.generateToken(doctor.getEmail());
             response.put("token", token);
